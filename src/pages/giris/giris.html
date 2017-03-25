@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Üyelik</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label floating>Kullanıcı</ion-label>
+    <ion-input [(ngModel)]="user.id" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Şifre</ion-label>
+    <ion-input [(ngModel)]="user.pw" type="password"></ion-input>
+  </ion-item>
+  
+  <button ion-button (click)="login(user)">Giriş</button>
+  <button ion-button (click)="signupForm()">Kaydol</button>
+</ion-content>

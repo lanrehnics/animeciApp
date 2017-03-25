@@ -1,0 +1,50 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <div class="ortala" *ngIf="user">
+      <ion-grid>
+        <ion-row>
+          <ion-col><img [src]="user.p" /></ion-col>
+          <ion-col>
+            <h4>@{{user.uid}}</h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-header>
+  <ion-content>
+    <ion-list style="padding-top: 5px;" *ngIf="user">
+      <ion-item class="profil" track="izlenmis">
+        İzlenmiş : {{user.uc}}
+      </ion-item>
+      <ion-item class="profil" track="izleniyor">
+        İzleniyor : {{user.uw}}
+      </ion-item>
+      <ion-item class="profil" track="izlenecek">
+        İzlenecek : {{user.up}}
+      </ion-item>
+      <ion-item class="profil" track="beklemede">
+        Beklemede : {{user.uh}}
+      </ion-item>
+      <ion-item class="profil" track="birakilmis">
+        Bırakılmış : {{user.ud}}
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <button menuClose ion-item icon-left *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <button ion-item icon-left (click)="showPrompt()"><ion-icon name="code-download"></ion-icon> MAL Import</button>
+      <button ion-item icon-left (click)="logout()"><ion-icon name="log-out"></ion-icon> Çıkış Yap</button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

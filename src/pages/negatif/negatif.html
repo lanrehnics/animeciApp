@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Negatifler</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Yenilemek için çek & bırak" refreshingSpinner="circles"
+            refreshingText="Güncelleniyor...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list *ngIf="negatifler">
+
+        <ion-item *ngFor="let negatif of negatifler" (click)="kontroleGit(negatif.id);">
+            <ion-thumbnail item-left>
+                <img src="http://www.turkanime.tv/imajlar/seriler/{{ negatif.taid }}.jpg" />
+            </ion-thumbnail>
+            <h2>{{ negatif.adi }}</h2>
+            <h3>{{ negatif.id }} • {{ negatif.malID }}</h3>
+            <p *ngIf="negatif.malID == 0"> Dont touch, no mal info </p>
+            <p *ngIf="negatif.malID > 0"> Its correct, not finished </p>
+            <p *ngIf="negatif.malID < 0"> New / needs approval </p>
+        </ion-item>
+
+        <ion-icon name="thumbs-up" padding *ngIf="negatifler.length == 0"> Yeni eklenip, negatif bulunmamakta!</ion-icon>
+
+    </ion-list>
+</ion-content>

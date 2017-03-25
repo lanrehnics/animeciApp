@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-searchbar [(ngModel)]="searchKey"
+                       placeholder="Ara"
+                       (change)="onInput($event)">
+        </ion-searchbar>
+        <ion-title style="display:none;">Yeniler</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown"
+                               pullingText="Yenilemek için çek & bırak"
+                               refreshingSpinner="circles"
+                               refreshingText="Güncelleniyor...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list>
+
+        <ion-item *ngFor="let son of sonList" [attr.track]="son.anime.liste == null ? 'listesiz' : son.anime.liste.listType | listesi">
+            <button ion-item class="cizgili" (click)="openActionSheet(son)">
+                <ion-thumbnail item-left>
+                    <img [src]="son.anime.poster" />
+                </ion-thumbnail>
+                <h3><b>{{son.adi}}</b></h3>
+                <p>{{son.anime.turleri}}</p>
+                <ion-badge>{{son.anime.tip}} &mdash; {{son.anime.sure}}dk</ion-badge> <ion-badge color="danger">{{son.eklendi | moment}}</ion-badge>
+                <ion-badge *ngIf="son.liste" color="secondary"><ion-icon name="eye"></ion-icon> <span *ngIf="son.anime.liste && son.anime.liste.listType == 1">{{son.anime.liste.ekstra}} / {{son.anime.bolumSayisi | bsSplitter}}</span></ion-badge>
+            </button>
+        </ion-item>
+
+    </ion-list>
+
+</ion-content>

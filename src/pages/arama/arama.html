@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-searchbar [(ngModel)]="searchKey" placeholder="Ara" (search)="searchByKeyword($event)"></ion-searchbar>
+    <ion-title style="display:none;">Detaylı Arama</ion-title>
+</ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let a of list" [attr.track]="a.liste == null ? 'listesiz' : a.liste.listType | listesi">
+      <button ion-item class="cizgili" (click)="detayaGit(a)">
+                <ion-thumbnail item-left>
+                  <img [src]="a.poster" />
+                </ion-thumbnail>
+                <h3><b>{{a.adi}}</b></h3>
+                <p>{{a.turleri}}</p>
+                <ion-badge>{{a.tip}} &mdash; {{a.sure}}dk</ion-badge> 
+                <ion-badge color="secondary">{{a.bolumSayisi}}</ion-badge>
+                <ion-badge *ngIf="a.liste && a.liste.listType == 1" color="secondary">{{a.liste.ekstra}} / {{a.bolumSayisi | bsSplitter}}</ion-badge>
+                </button>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

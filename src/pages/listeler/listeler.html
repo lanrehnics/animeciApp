@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{header}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let a of list" [attr.track]="a.liste == null ? 'listesiz' : a.liste.listType | listesi">
+      <button ion-item class="cizgili" (click)="detayaGit(a)">
+                <ion-thumbnail item-left>
+                  <img [src]="a.poster" />
+                </ion-thumbnail>
+                <h3><b>{{a.adi}}</b></h3>
+                <p>{{a.turleri}}</p>
+                <ion-badge>{{a.tip}} &mdash; {{a.sure}}dk</ion-badge> <ion-badge color="danger">{{a.liste.tarih | moment}}</ion-badge>
+                <ion-badge *ngIf="a.liste.listType == 1" color="secondary">{{a.liste.ekstra}} / {{a.bolumSayisi | bsSplitter}}</ion-badge>
+                </button>
+      <ion-item-options>
+        <button danger (click)="deleteItem(a)">Izledim</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+</ion-content>

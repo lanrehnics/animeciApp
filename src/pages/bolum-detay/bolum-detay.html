@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf="bolum">{{bolum.adi}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngIf="view == 'html5'">
+    <div class="video-container">
+      <iframe [src]="toPlay" allowfullscreen></iframe>
+    </div>
+    <ion-badge item-left>{{cVideo.kimin}}</ion-badge>
+    <ion-badge item-right color="secondary">{{cVideo.grup}}</ion-badge>
+    <p>{{cVideo.emegiGecenler}}</p>
+    <hr/>
+  </div>
+
+  <div *ngIf="bolum">
+
+    <ion-item-group *ngFor="let g of bolum.videolar | groupBy:'grup'">
+      <ion-item-divider color="light">{{g.key}}</ion-item-divider>
+      <button ion-item *ngFor="let video of g.value" (click)="playHTML5(video)">
+        <h2>{{video.kimin}} &mdash; {{video.eklendi | moment}}</h2>
+        <p>{{video.emegiGecenler}}</p>
+      </button>
+    </ion-item-group>
+    
+    <ion-icon name="thumbs-up" padding *ngIf="bolum.videolar.length == 0"> Henuz video eklenmemis!</ion-icon>
+  </div>
+</ion-content>

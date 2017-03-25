@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{anime.adi}}</ion-title>
+  </ion-navbar>
+  <ion-toolbar position="top">
+    <ion-segment light [(ngModel)]="secim">
+      <ion-segment-button value="bilgiler" (ionSelect)="bilgiler();">
+        Anime Bilgileri
+      </ion-segment-button>
+      <ion-segment-button value="bolumler" (ionSelect)="bolumler();">
+        Bölümleri
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="secim">
+  <ion-grid *ngIf="secim == 'bilgiler'">
+    <ion-row>
+      <ion-col width-33>
+        <img [src]="anime.poster" />
+      </ion-col>
+      <ion-col>
+        <ion-badge item-left color="danger">{{ anime.sure }} dk</ion-badge>
+        <ion-badge item-right>{{anime.tip}}</ion-badge>
+        <ion-badge item-right color="secondary">{{ anime.bolumSayisi }}</ion-badge>
+        <ion-badge color="danger">{{anime.yili}}</ion-badge>
+        <ion-badge>{{ anime.eklendi | moment }}</ion-badge>
+        <hr/>
+        <ion-badge *ngFor="let t of anime.turleri">{{t}}</ion-badge>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-chip item-right *ngIf="!anime.liste" (click)="add2Fav()">
+          <ion-icon name="add-circle"> </ion-icon>
+          <ion-label>Listeme Ekle</ion-label>
+        </ion-chip>
+        <ion-chip item-right color="secondary" *ngIf="anime.liste && anime.liste.listType == 2">
+          <ion-icon name="star">{{anime.liste.puan}}</ion-icon>
+          <ion-label>İzlenmiş</ion-label>
+        </ion-chip>
+        <ion-chip item-right *ngIf="anime.liste && anime.liste.listType == 1">
+          <ion-icon name="star">{{anime.liste.puan}}</ion-icon>
+          <ion-label>İzleniyor</ion-label>
+        </ion-chip>
+        <ion-chip item-right *ngIf="anime.liste && anime.liste.listType == 6">
+          <ion-icon name="star">{{anime.liste.puan}}</ion-icon>
+          <ion-label>İzlenecek</ion-label>
+        </ion-chip>
+        <ion-chip item-right *ngIf="anime.liste && anime.liste.listType == 3">
+          <ion-icon name="star">{{anime.liste.puan}}</ion-icon>
+          <ion-label>Beklemede</ion-label>
+        </ion-chip>
+        <ion-chip item-right *ngIf="anime.liste && anime.liste.listType == 4">
+          <ion-icon name="star">{{anime.liste.puan}}</ion-icon>
+          <ion-label>Bırakılmış</ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h6>{{ anime.alternatif }}</h6>
+        <hr/> {{ anime.ozet }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngIf="secim == 'bolumler'">
+    <ion-item-sliding *ngFor="let b of bolumleri">
+      <button ion-item (click)="bolumeGit(b)">
+        <h3>{{b.adi.replace(anime.adi, '')}}</h3>
+        <p>{{anime.adi}}</p>
+        <p><span ion-text color="secondary"><i>Güncel : {{ b.guncel | moment }}</i></span> &mdash; <span ion-text color="primary"><i>Eklenme : {{ b.eklendi | moment }}</i></span></p>
+        <ion-badge item-right color="secondary" *ngIf="b.liste"><ion-icon name="eye"></ion-icon></ion-badge>
+      </button>
+      <ion-item-options>
+        <button ion-text color="danger" *ngIf="b.liste" (click)="deleteFav(b)">İzlemedim</button>
+          <button ion-text color="secondary" *ngIf="!b.liste" (click)="fav(b)">İzledim</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

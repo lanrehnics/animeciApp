@@ -1,0 +1,78 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Anime Kontrol & Update Panel</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-grid *ngIf="anime">
+            <h3>{{anime.adi}}</h3>
+    <ion-row>
+      <ion-col width-33 (click)="toggleOzet();">
+        <img src="http://www.turkanime.tv/imajlar/seriler/{{ anime.taid }}.jpg" />
+      </ion-col>
+      <ion-col>
+        <ion-badge item-left color="danger">{{anime.id}}i</ion-badge>
+        <ion-badge>{{anime.malID}}m</ion-badge>
+        <ion-badge item-right color="secondary">{{anime.taid}}t</ion-badge>
+        <hr/>
+        <ion-badge item-left color="danger">{{ anime.sure }} dk</ion-badge>
+        <ion-badge>MF : {{anime.malInfo}}</ion-badge>
+        <ion-badge item-right color="secondary">{{ anime.bolumSayisi }}</ion-badge>
+        <hr/>
+        <ion-badge item-left color="danger">{{anime.yili}}</ion-badge>
+        <ion-badge *ngIf="anime.poster">Posterli</ion-badge>
+        <ion-badge item-right color="secondary">{{anime.tip}}</ion-badge>
+        <hr/>
+        <ion-badge item-right color="danger">{{ anime.guncel | moment }}</ion-badge>
+        <ion-badge item-left>{{ anime.malGuncel | moment }}</ion-badge>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label>Update w/MalID :</ion-label>
+        <ion-input [(ngModel)]="anime.malID" (keypress)="eventHandler($event.keyCode)" type="text"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        {{anime.turleri}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        {{ anime.alternatif }}
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="gOzet">
+      <ion-col>
+        {{ anime.ozet }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngIf="kitsus">
+    <ion-list-header>
+      MAL Önerileri
+    </ion-list-header>
+
+    <ion-item-sliding *ngFor="let k of kitsus.data">
+      <button ion-item (click)="openActionSheet(son)">
+        <ion-thumbnail item-left>
+          <img [src]="k.attributes.posterImage.tiny" />
+        </ion-thumbnail>
+
+        <h2>{{k.attributes.canonicalTitle}}</h2>
+        <p ion-text color="secondary">{{ k.attributes.showType }} &mdash; {{ k.id }}k</p>
+        <p ion-text color="primary">{{k.attributes.episodeCount}}x &mdash; {{k.attributes.episodeLength}}dk</p>
+        <p><span ion-text color="secondary">{{ k.attributes.startDate }}</span> ~ <span ion-text color="danger">{{k.attributes.endDate}}</span></p>
+      </button>
+      <ion-item-options>
+        <button ion-text color="secondary" (click)="updateWith(anime.id, k)">Update</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+</ion-content>

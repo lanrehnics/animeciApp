@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Başlarken</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list [virtualScroll]="list" approxItemHeight="100px">
+    <ion-item *virtualItem="let a; let i = index" (click)="detayaGit(a.id)">
+      <ion-thumbnail item-left>
+        <ion-img [src]="a.poster ? a.poster : 'http://www.turkanime.tv/imajlar/serilerb/'+a.taid+'.jpg'"></ion-img>
+      </ion-thumbnail>
+      <h3>{{a.adi}}</h3>
+      <p>#{{i}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<!--<ion-content no-bounce class="page-hakkinda">
+
+<ion-slides pager>
+    <ion-slide *ngFor="let slide of slides">
+      <ion-toolbar>
+        <ion-buttons end>
+          <button ion-button>Skip</button>
+        </ion-buttons>
+      </ion-toolbar>
+      <img [src]="slide.image" class="slide-image"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p>
+    </ion-slide>
+    <ion-slide>
+      <ion-toolbar>
+      </ion-toolbar>
+      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
+      <h2 class="slide-title">Ready to Play?</h2>
+      <button ion-button large clear icon-right>
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>-->
